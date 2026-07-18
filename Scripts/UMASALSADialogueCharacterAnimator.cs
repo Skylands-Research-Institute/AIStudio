@@ -22,9 +22,14 @@ namespace DracarysInteractive.AIStudio
 
         private List<(string partial, string name, Action<DialogueCharacter, string, string> action)> _animations = new List<(string partial, string name, Action<DialogueCharacter, string, string> action)>();
         private bool _moving = false;
+        private DialogueCharacter _dialogueCharacter;
+        private Animator _animator;
 
         private void Awake()
         {
+            _dialogueCharacter = GetComponent<DialogueCharacter>();
+            _animator = GetComponent<Animator>();
+
             _animations.Add(("smil", "smiling", emote));
             _animations.Add(("smirk", "smiling", emote));
             _animations.Add(("moves toward", "walking", movesToward));
@@ -34,6 +39,17 @@ namespace DracarysInteractive.AIStudio
 
             if (GetComponent<NPCMovement>())
                 GetComponent<NPCMovement>().OnMovement.AddListener(onMovement);
+        }
+
+        private void LateUpdate()
+        {
+            if (!_dialogueCharacter || !_dialogueCharacter.lookAtTarget || !_animator || !_animator.isHuman)
+                return;
+
+            Transform head = _animator.GetBoneTransform(HumanBodyBones.Head);
+
+            if (head)
+                _dialogueCharacter.lookAtTarget.position = head.position;
         }
 
         private void onMovement(bool moving)

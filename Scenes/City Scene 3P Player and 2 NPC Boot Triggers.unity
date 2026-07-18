@@ -6731,7 +6731,7 @@ MonoBehaviour:
       valuesConverted: 1
     - name: Skin
       channelMask:
-      - {r: 0.9450981, g: 0.91372555, b: 0.7686275, a: 1}
+      - {r: 1, g: 1, b: 1, a: 1}
       - {r: 1, g: 1, b: 1, a: 1}
       - {r: 1, g: 1, b: 1, a: 1}
       channelAdditiveMask:
@@ -6743,7 +6743,7 @@ MonoBehaviour:
         serializedProperties: []
       foldout: 0
       _name: 
-      _color: {r: 0.9450981, g: 0.91372555, b: 0.7686275, a: 1}
+      _color: {r: 1, g: 1, b: 1, a: 1}
       _metallicGloss: {r: 0, g: 0, b: 0, a: 0}
       Raw: 0
       valuesConverted: 1
@@ -21151,7 +21151,7 @@ MonoBehaviour:
       valuesConverted: 1
     - name: Skin
       channelMask:
-      - {r: 0.9450981, g: 0.91372555, b: 0.7686275, a: 1}
+      - {r: 1, g: 1, b: 1, a: 1}
       - {r: 1, g: 1, b: 1, a: 1}
       - {r: 1, g: 1, b: 1, a: 1}
       channelAdditiveMask:
@@ -21163,7 +21163,7 @@ MonoBehaviour:
         serializedProperties: []
       foldout: 0
       _name: 
-      _color: {r: 0.9450981, g: 0.91372555, b: 0.7686275, a: 1}
+      _color: {r: 1, g: 1, b: 1, a: 1}
       _metallicGloss: {r: 0, g: 0, b: 0, a: 0}
       Raw: 0
       valuesConverted: 1
@@ -26181,7 +26181,7 @@ MonoBehaviour:
     _colors:
     - name: Hair
       channelMask:
-      - {r: 1.4117647, g: 0.8627451, b: 0.5647059, a: 1}
+      - {r: 1, g: 0.8627451, b: 0.5647059, a: 1}
       - {r: 1, g: 1, b: 1, a: 1}
       - {r: 1, g: 1, b: 1, a: 1}
       channelAdditiveMask:
@@ -26217,7 +26217,7 @@ MonoBehaviour:
       valuesConverted: 1
     - name: Skin
       channelMask:
-      - {r: 0.9450981, g: 0.91372555, b: 0.7686275, a: 1}
+      - {r: 1, g: 1, b: 1, a: 1}
       - {r: 1, g: 1, b: 1, a: 1}
       - {r: 1, g: 1, b: 1, a: 1}
       channelAdditiveMask:
@@ -26229,7 +26229,7 @@ MonoBehaviour:
         serializedProperties: []
       foldout: 0
       _name: 
-      _color: {r: 0.9450981, g: 0.91372555, b: 0.7686275, a: 1}
+      _color: {r: 1, g: 1, b: 1, a: 1}
       _metallicGloss: {r: 0, g: 0, b: 0, a: 0}
       Raw: 0
       valuesConverted: 1

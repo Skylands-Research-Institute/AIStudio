@@ -3436,7 +3436,7 @@ MonoBehaviour:
       valuesConverted: 1
     - name: Skin
       channelMask:
-      - {r: 0.9450981, g: 0.91372555, b: 0.7686275, a: 1}
+      - {r: 1, g: 1, b: 1, a: 1}
       - {r: 1, g: 1, b: 1, a: 1}
       - {r: 1, g: 1, b: 1, a: 1}
       channelAdditiveMask:
@@ -3448,7 +3448,7 @@ MonoBehaviour:
         serializedProperties: []
       foldout: 0
       _name: 
-      _color: {r: 0.9450981, g: 0.91372555, b: 0.7686275, a: 1}
+      _color: {r: 1, g: 1, b: 1, a: 1}
       _metallicGloss: {r: 0, g: 0, b: 0, a: 0}
       Raw: 0
       valuesConverted: 1
@@ -9104,7 +9104,7 @@ MonoBehaviour:
     sharedColors:
     - name: Skin
       channelMask:
-      - {r: 0.9450981, g: 0.91372555, b: 0.7686275, a: 1}
+      - {r: 1, g: 1, b: 1, a: 1}
       - {r: 1, g: 1, b: 1, a: 1}
       - {r: 1, g: 1, b: 1, a: 1}
       channelAdditiveMask:
