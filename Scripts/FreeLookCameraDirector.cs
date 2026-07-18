@@ -1,5 +1,5 @@
 #if USE_CINEMACHINE
-using Cinemachine;
+using Unity.Cinemachine;
 #endif
 using UnityEngine;
 
@@ -8,15 +8,15 @@ namespace DracarysInteractive.AIStudio
     public class FreeLookCameraDirector : MonoBehaviour, IDialogueCameraDirector
     {
 #if USE_CINEMACHINE
-        public CinemachineFreeLook _freeLookCamera;
+        public CinemachineVirtualCameraBase _freeLookCamera;
 
-        private CinemachineFreeLook freeLookCamera
+        private CinemachineVirtualCameraBase freeLookCamera
         {
             get
             {
                 if (!_freeLookCamera)
                 {
-                    _freeLookCamera = FindObjectOfType<CinemachineFreeLook>();
+                    _freeLookCamera = FindFirstObjectByType<CinemachineVirtualCameraBase>();
                 }
 
                 return _freeLookCamera;
