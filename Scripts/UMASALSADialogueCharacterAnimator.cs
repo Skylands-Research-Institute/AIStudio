@@ -32,6 +32,14 @@ namespace DracarysInteractive.AIStudio
 
             _animations.Add(("smil", "smiling", emote));
             _animations.Add(("smirk", "smiling", emote));
+            _animations.Add(("exasper", "exasper", emote));
+            _animations.Add(("soften", "soften", emote));
+            _animations.Add(("browsUp", "browsUp", emote));
+            _animations.Add(("browUp", "browUp", emote));
+            _animations.Add(("squint", "squint", emote));
+            _animations.Add(("focus", "focus", emote));
+            _animations.Add(("flare", "flare", emote));
+            _animations.Add(("scrunch", "scrunch", emote));
             _animations.Add(("moves toward", "walking", movesToward));
             _animations.Add(("nod", "nodding", trigger));
             _animations.Add(("excit", "talking", talking));
