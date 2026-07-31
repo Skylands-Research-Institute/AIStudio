@@ -2,7 +2,11 @@
 using CrazyMinnow.SALSA;
 #endif
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using UMA;
+using UMA.CharacterSystem;
+using UMA.PoseTools;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -24,11 +28,16 @@ namespace DracarysInteractive.AIStudio
         private bool _moving = false;
         private DialogueCharacter _dialogueCharacter;
         private Animator _animator;
+        private DynamicCharacterAvatar _umaAvatar;
+        private UMAExpressionPlayer _expressionPlayer;
+        private Coroutine _jawOverrideRoutine;
 
         private void Awake()
         {
             _dialogueCharacter = GetComponent<DialogueCharacter>();
             _animator = GetComponent<Animator>();
+            _umaAvatar = GetComponent<DynamicCharacterAvatar>();
+            _expressionPlayer = GetComponent<UMAExpressionPlayer>();
 
             _animations.Add(("smil", "smiling", emote));
             _animations.Add(("smirk", "smiling", emote));
@@ -47,6 +56,39 @@ namespace DracarysInteractive.AIStudio
 
             if (GetComponent<NPCMovement>())
                 GetComponent<NPCMovement>().OnMovement.AddListener(onMovement);
+
+            if (_umaAvatar)
+                _umaAvatar.CharacterUpdated.AddListener(onUmaCharacterUpdated);
+        }
+
+        private void OnDestroy()
+        {
+            if (_umaAvatar)
+                _umaAvatar.CharacterUpdated.RemoveListener(onUmaCharacterUpdated);
+        }
+
+        private void onUmaCharacterUpdated(UMAData umaData)
+        {
+            if (_jawOverrideRoutine != null)
+                StopCoroutine(_jawOverrideRoutine);
+
+            _jawOverrideRoutine = StartCoroutine(enableJawOverrideAfterBuild());
+        }
+
+        private IEnumerator enableJawOverrideAfterBuild()
+        {
+            yield return null;
+
+            if (!_expressionPlayer)
+                _expressionPlayer = GetComponent<UMAExpressionPlayer>();
+
+            if (_expressionPlayer)
+            {
+                _expressionPlayer.overrideMecanimJaw = true;
+                _expressionPlayer.Initialize();
+            }
+
+            _jawOverrideRoutine = null;
         }
 
         private void LateUpdate()
