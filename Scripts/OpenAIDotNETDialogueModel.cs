@@ -17,20 +17,45 @@ namespace DracarysInteractive.AIStudio
     public class OpenAIDotNETDialogueModel : MonoBehaviour, IDialogueModel
     {
 #if USE_COM_OPENAI_API
+        public enum ReasoningEffort
+        {
+            ModelDefault,
+            None,
+            Low,
+            Medium,
+            High,
+            XHigh,
+            Max
+        }
+
         public string apikey;
-        public string model = "gpt-4o";
+        public string model = "gpt-5.6-luna";
+        public ReasoningEffort reasoningEffort = ReasoningEffort.ModelDefault;
+        public int maxRetainedCompletions = 12; // Set to 0 or less to retain all completions.
         public bool async = false;
         public string[] messages; // Inspector debugging...
 
         private ChatCompletionOptions _options = new ChatCompletionOptions();
         private ChatClient _client;
         private List<ChatMessage> _messages = new List<ChatMessage>();
+        private Queue<ChatMessage> _completions = new Queue<ChatMessage>();
         private List<string> _raw = new List<string>();
 
         void Awake()
         {
             DialogueModel.Instance.Log($"creating OpenAI .NET chat client, using model {model}");
             _client = new(model, string.IsNullOrEmpty(apikey) ? Environment.GetEnvironmentVariable("OPENAI_API_KEY") : apikey);
+
+            if (reasoningEffort != ReasoningEffort.ModelDefault)
+            {
+                string effort = reasoningEffort == ReasoningEffort.XHigh
+                    ? "xhigh"
+                    : reasoningEffort.ToString().ToLowerInvariant();
+
+#pragma warning disable OPENAI001
+                _options.ReasoningEffortLevel = new ChatReasoningEffortLevel(effort);
+#pragma warning restore OPENAI001
+            }
         }
 
         public void SetTemperature(float temperature)
@@ -67,10 +92,36 @@ namespace DracarysInteractive.AIStudio
             messages = _raw.ToArray();
         }
 
+        private void AddCompletion(string text)
+        {
+            ChatMessage completion = ChatMessage.CreateAssistantMessage(text);
+            Add(completion);
+            _completions.Enqueue(completion);
+
+            if (maxRetainedCompletions <= 0)
+                return;
+
+            while (_completions.Count > maxRetainedCompletions)
+            {
+                ChatMessage staleCompletion = _completions.Dequeue();
+                int index = _messages.IndexOf(staleCompletion);
+
+                if (index >= 0)
+                {
+                    _messages.RemoveAt(index);
+                    _raw.RemoveAt(index);
+                }
+            }
+
+            messages = _raw.ToArray();
+        }
+
         public void Clear()
         {
             DialogueModel.Instance.Log("enter Clear");
             _messages.Clear();
+            _completions.Clear();
+            _raw.Clear();
             messages = new string[0];
         }
 
@@ -92,7 +143,7 @@ namespace DracarysInteractive.AIStudio
 
             DialogueModel.Instance.Log($"CompleteAsync: Add text={text}");
 
-            Add(text);
+            AddCompletion(text);
             onResponse.Invoke(text);
         }
 
@@ -105,7 +156,7 @@ namespace DracarysInteractive.AIStudio
 
             DialogueModel.Instance.Log($"CompleteAsync: Add text={text}");
 
-            Add(text);
+            AddCompletion(text);
             onResponse.Invoke(text);
         }
 
